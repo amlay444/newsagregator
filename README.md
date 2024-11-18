@@ -1,5 +1,5 @@
-## NewsPalette
-NewsPalette is a personalized news aggregator application that curates news articles from various sources based on user preferences. It leverages modern technologies like AI to deliver relevant and up-to-date content in an intuitive interface.
+## NewsAggregator
+This is a personalized news aggregator application that curates news articles from various sources based on user preferences. It leverages modern technologies like AI to deliver relevant and up-to-date content in an intuitive interface.
 
 # Features
 Personalized News Feed: Tailored content based on user preferences.
