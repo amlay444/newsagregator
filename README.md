@@ -1,20 +1,21 @@
-NewsPalette
+## NewsPalette
 NewsPalette is a personalized news aggregator application that curates news articles from various sources based on user preferences. It leverages modern technologies like AI to deliver relevant and up-to-date content in an intuitive interface.
 
-Features
+# Features
 Personalized News Feed: Tailored content based on user preferences.
 Multiple News Sources: Aggregates news from a wide range of reputable sources.
 Search and Filter: Allows users to search and filter news by category, source, and keywords.
 Offline Reading: Save articles for offline access.
 Push Notifications: Stay updated with breaking news alerts.
-Technologies Used
+
+# Technologies Used
 Frontend: React Native
 Backend: Node.js, Flask
 Database: Supabase
 API Integration: GNews API
 AI: Machine learning for content personalization
 
-Installation
+# Installation
 Steps
 Clone the repository:
 bash
