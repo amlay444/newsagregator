@@ -13,7 +13,7 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Invalid input', 'Please enter both email and password');
+      Alert.alert('Invalid', 'Please enter both email and password');
       return;
     }
 
@@ -69,57 +69,56 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
-    padding: SPACING * 3, // Adjusted padding for better fit
+    padding: SPACING * 3,
   },
   title: {
-    fontSize: SPACING * 4, // Adjusted font size for better fit
+    fontSize: SPACING * 4,
     fontWeight: 'bold',
-    marginBottom: SPACING * 3, // Adjusted margin for better spacing
+    marginBottom: SPACING * 2, 
     color: COLORS.dark,
     textAlign: 'center',
-    letterSpacing: 1.5, // Adjusted letter spacing for better readability
+    letterSpacing: 1.5, 
     fontFamily: 'Roboto',
   },
   input: {
-    width: '85%', // Adjusted width for better alignment
-    height: SPACING * 5, // Adjusted height for better touch targets
+    width: '85%', 
+    height: SPACING * 5, 
     borderColor: COLORS.secondary,
-    borderWidth: 1.5, // Adjusted border width for better definition
-    borderRadius: SPACING * 1.5, // Adjusted border radius for a softer look
-    paddingLeft: SPACING * 1.2, // Adjusted padding for better text alignment
-    marginBottom: SPACING * 2.5, // Adjusted margin for better spacing
-    fontSize: SPACING * 1.8, // Adjusted font size for better readability
+    borderWidth: 1.5,
+    borderRadius: SPACING * 1.5, 
+    paddingLeft: SPACING * 1.2, 
+    marginBottom: SPACING * 2.5, 
+    fontSize: SPACING * 1.8, 
     fontFamily: 'Roboto',
   },
   button: {
     backgroundColor: COLORS.secondary,
-    paddingVertical: SPACING * 1.8, // Adjusted padding for better touch targets
-    paddingHorizontal: SPACING * 3.5, // Adjusted padding for better touch targets
-    borderRadius: SPACING * 1.5, // Adjusted border radius for a softer look
-    width: '85%', // Adjusted width for better alignment
-    alignItems: 'center',
-    marginTop: SPACING * 2.5, // Adjusted margin for better spacing
-    elevation: 5, // Adjusted elevation for a more pronounced shadow
-    shadowColor: COLORS.secondary,
-    shadowOffset: { width: 0, height: 2.5 }, // Adjusted shadow offset for more depth
-    shadowOpacity: 0.35, // Adjusted shadow opacity for more visibility
-    shadowRadius: 4.5, // Adjusted shadow radius for a softer shadow
-  },
+    paddingVertical: SPACING * 1.5, 
+    paddingHorizontal: SPACING * 2.5, 
+    borderRadius: SPACING, 
+    width: '80%',
+    alignItems: 'center', 
+    justifyContent: 'center',
+    marginTop: SPACING * 1, 
+    marginBottom: SPACING * 1, 
+    borderColor: COLORS.dark, 
+    borderWidth: 1, 
+},
   buttonText: {
     color: COLORS.dark,
-    fontSize: SPACING * 2.2, // Adjusted font size for better readability
+    fontSize: SPACING * 2.2, 
     fontWeight: 'bold',
     fontFamily: 'Roboto',
   },
   link: {
     color: COLORS.secondary,
-    fontSize: SPACING * 1.8, // Adjusted font size for better readability
-    marginTop: SPACING * 2, // Added margin for better spacing
+    fontSize: SPACING * 1.8, 
+    marginTop: SPACING * 1, 
   },
   error: {
     color: 'red',
-    fontSize: SPACING * 1.6, // Adjusted font size for better readability
-    marginBottom: SPACING * 2, // Added margin for better spacing
+    fontSize: SPACING * 1.2, 
+    marginBottom: SPACING * 2, 
   },
 });
 

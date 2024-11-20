@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { View, Text, Image, ScrollView, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { Card, Paragraph, Title, Chip } from "react-native-paper";
-import { supabase } from '../supabase'
-import Header from "../components/AppBar";
+import { supabase } from '../../supabase'
+// import Header from "../../components/AppBar";
 import { Ionicons } from '@expo/vector-icons';
 
 export default class HomeScreen extends Component {

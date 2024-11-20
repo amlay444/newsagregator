@@ -9,11 +9,9 @@ const categories = [
     { name: 'Sports', color: '#FFA500' },
     { name: 'Business', color: '#8A2BE2' },
     { name: 'Entertainment', color: '#FF69B4' },
-    { name: 'Travel', color: '#20B2AA' },
-    { name: 'Food', color: '#FF4500' },
-    { name: 'Lifestyle', color: '#00FF7F' },
-    { name: 'Politics', color: '#800080' },
-    { name: 'Environment', color: '#008080' },
+    { name: 'General', color: '#000000' },
+    { name: 'World', color: '#800080' },
+    { name: 'Nation', color: '#FF0000' },
 ];
 
 const PreferencesScreen = ({ navigation }) => {

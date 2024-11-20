@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../supabase';
 
@@ -51,68 +51,74 @@ const SignupScreen = () => {
             if (error) throw new Error(error.message);
 
             Alert.alert('Sign Up Successful', 'Please proceed to set your preferences.');
-            navigation.navigate('Preferences');
+            navigation.navigate('SelectPreferences');
         } catch (error) {
             Alert.alert('Sign Up Failed', error.message);
         }
     };
-
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Sign Up</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="First Name"
-                value={firstName}
-                onChangeText={(text) => setFirstName(text)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Last Name"
-                value={lastName}
-                onChangeText={(text) => setLastName(text)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={(text) => setEmail(text)}
-                keyboardType="email-address"
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Phone Number"
-                value={phone}
-                onChangeText={(text) => {
-                    if (isValidPhone(text)) setPhone(text);
-                }}
-                keyboardType="phone-pad"
-                maxLength={10}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Confirm Password"
-                onChangeText={setConfirmPassword}
-                value={confirmPassword}
-                secureTextEntry
-                autoCapitalize="none"
-            />
-            <TouchableOpacity style={styles.button} onPress={handleSignup}>
-                <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.link}>Already have an account? Log in</Text>
-            </TouchableOpacity>
-        </View>
+        <ScrollView contentContainerStyle={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.welcomeMessage}>Welcome to Our App!</Text>
+                <Text style={styles.tagline}>Fill in your details to get started.</Text>
+            </View>
+            <View style={styles.formContainer}>
+                <Text style={styles.title}>Create Your Account</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="First Name"
+                    value={firstName}
+                    onChangeText={(text) => setFirstName(text)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Last Name"
+                    value={lastName}
+                    onChangeText={(text) => setLastName(text)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={(text) => setEmail(text)}
+                    keyboardType="email-address"
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Phone Number"
+                    value={phone}
+                    onChangeText={(text) => {
+                        if (isValidPhone(text)) setPhone(text);
+                    }}
+                    keyboardType="phone-pad"
+                    maxLength={10}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Confirm Password"
+                    onChangeText={setConfirmPassword}
+                    value={confirmPassword}
+                    secureTextEntry
+                    autoCapitalize="none"
+                />
+                <TouchableOpacity style={styles.button} onPress={handleSignup}>
+                    <Text style={styles.buttonText}>Sign Up</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.link}>Already have an account? Log in</Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
     );
 };
+    
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -120,6 +126,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#f5f5f5',
         padding: 20,
+    },
+    header: {
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    welcomeMessage: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: '#333',
+    },
+    tagline: {
+        fontSize: 16,
+        color: '#666',
+    },
+    formContainer: {
+        width: '100%',
+        paddingHorizontal: 20,
     },
     title: {
         fontSize: 24,
@@ -141,7 +165,7 @@ const styles = StyleSheet.create({
     button: {
         width: '100%',
         height: 50,
-        backgroundColor: '#007BFF',
+        backgroundColor: '#D8BFD8', 
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
@@ -153,7 +177,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     link: {
-        color: '#007BFF',
+        color: '#D8BFD8', 
         fontSize: 16,
     },
 });
