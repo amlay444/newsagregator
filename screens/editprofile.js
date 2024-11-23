@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../supabase';
 import { Ionicons } from '@expo/vector-icons';
+import COLORS from '../config/COLORS';
 
 const EditProfileScreen = () => {
     const [firstName, setFirstName] = useState('');
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     button: {
         width: '100%',
         height: 50,
-        backgroundColor: '#007BFF',
+        backgroundColor: 'COLORS.lighter',
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     logoutButton: {
         width: '100%',
         height: 50,
-        backgroundColor: '#FF6347',
+        backgroundColor: COLORS.darker,
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',

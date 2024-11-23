@@ -1,7 +1,8 @@
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomeScreen from '../screens/homescreen';
 import EditProfileScreen from '../screens/editprofile';
 import LoginScreen from '../screens/loginscreen';
@@ -16,9 +17,51 @@ import WelcomeScreen from '../screens/welcomescreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+function MyTabs() {
+    return (
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+
+                    if (route.name === 'Home') {
+                        iconName = focused ? 'home' : 'home-outline';
+                    } else if (route.name === 'Explore') {
+                        iconName = focused ? 'magnify' : 'magnify-plus-outline';
+                    } else if (route.name === 'Edit Profile') {
+                        iconName = focused ? 'account' : 'account-outline';
+                    }
+
+                    // Return the icon component
+                    return <Icon name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: '#6200ee',
+                tabBarInactiveTintColor: 'gray',  
+                tabBarStyle: { backgroundColor: '#fff', paddingBottom: 5 }, 
+            })}
+        >
+            <Tab.Screen 
+                name="Home" 
+                component={Hometab} 
+                options={{ tabBarLabel: 'Home' }} 
+            />
+            <Tab.Screen 
+                name="Explore" 
+                component={Browsetab} 
+                options={{ tabBarLabel: 'Browse' }} 
+            />
+            <Tab.Screen 
+                name="Edit Profile" 
+                component={Editprofiletab} 
+                options={{ tabBarLabel: 'Profile' }} 
+            />
+        </Tab.Navigator>
+    );
+}
+
 export default function AppNavigation() {
-    function MyStack() {
-        return (
+    return (
+        <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen 
                     name="Welcome" 
@@ -37,7 +80,7 @@ export default function AppNavigation() {
                 />
                 <Stack.Screen 
                     name="Home" 
-                    component={HomeScreen} 
+                    component={MyTabs} 
                     options={{ headerShown: false }} 
                 />
                 <Stack.Screen 
@@ -55,24 +98,7 @@ export default function AppNavigation() {
                     component={ArticleDetails} 
                     options={{ headerShown: false }} 
                 />
-
             </Stack.Navigator>
-        )
-    }
-
-    function MyTabs() {
-        return (
-            <Tab.Navigator>
-                <Tab.Screen name="Home" component={Hometab} />
-                <Tab.Screen name="Browse" component={Browsetab} />
-                <Tab.Screen name="EditProfile" component={Editprofiletab} />
-            </Tab.Navigator>
-        )
-    }
-    return (
-        <NavigationContainer>
-            <MyStack />
-             </NavigationContainer>
-    )
-    
+        </NavigationContainer>
+    );
 }

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { supabase } from '../../supabase'
+import { supabase } from '../../supabase';
 import { Ionicons } from '@expo/vector-icons';
+import COLORS from '../../config/COLORS';
 
 const EditProfileScreen = () => {
     const [firstName, setFirstName] = useState('');
@@ -17,10 +18,10 @@ const EditProfileScreen = () => {
             if (error) {
                 console.error('Error fetching user:', error);
             } else if (user) {
-                setFirstName(user.user_metadata.first_name);
-                setLastName(user.user_metadata.last_name);
-                setEmail(user.email);
-                setPhone(user.user_metadata.phone);
+                setFirstName(user.user_metadata.first_name || '');
+                setLastName(user.user_metadata.last_name || '');
+                setEmail(user.email || '');
+                setPhone(user.user_metadata.phone || '');
             }
         };
 
@@ -29,7 +30,7 @@ const EditProfileScreen = () => {
 
     const handleSave = async () => {
         try {
-            const { error } = await supabase.auth.update({
+            const { error } = await supabase.auth.updateUser({
                 email: email,
                 data: { first_name: firstName, last_name: lastName, phone: phone }
             });
@@ -53,7 +54,7 @@ const EditProfileScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Ionicons name="person-circle-outline" size={100} color="black" style={styles.icon} />
+            <Ionicons name="person-circle-outline" size={80} color="gray" style={styles.icon} />
             <Text style={styles.title}>Edit Profile</Text>
             <TextInput
                 style={styles.input}
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     button: {
         width: '100%',
         height: 50,
-        backgroundColor: '#007BFF',
+        backgroundColor: COLORS.lighter,
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     logoutButton: {
         width: '100%',
         height: 50,
-        backgroundColor: '#FF6347',
+        backgroundColor: COLORS.darker,
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',

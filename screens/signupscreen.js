@@ -41,21 +41,30 @@ const SignupScreen = () => {
             Alert.alert('Invalid input', 'Passwords do not match');
             return;
         }
-
+        
         try {
-            const { user, error } = await supabase.auth.signUp(
-                { email: email, password: password },
-                { data: { first_name: firstName, last_name: lastName, phone: phone } }
-            );
-
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        first_name: firstName,
+                        last_name: lastName,
+                        phone: phone,
+                    },
+                },
+            });
+    
             if (error) throw new Error(error.message);
-
+    
             Alert.alert('Sign Up Successful', 'Please proceed to set your preferences.');
             navigation.navigate('SelectPreferences');
         } catch (error) {
             Alert.alert('Sign Up Failed', error.message);
         }
     };
+
+    
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.header}>
