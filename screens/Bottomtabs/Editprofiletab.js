@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../supabase';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,6 +10,11 @@ const EditProfileScreen = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -43,6 +48,33 @@ const EditProfileScreen = () => {
         }
     };
 
+    const handlePasswordChange = async () => {
+        if (newPassword !== confirmNewPassword) {
+            Alert.alert('Password Mismatch', 'New password and confirmation do not match');
+            return;
+        }
+
+        if (newPassword.length < 6) {
+            Alert.alert('Weak Password', 'Password must be at least 6 characters long');
+            return;
+        }
+
+        try {
+            const { error } = await supabase.auth.updateUser({
+                password: newPassword,
+            });
+
+            if (error) throw new Error(error.message);
+
+            Alert.alert('Password Changed Successfully');
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmNewPassword('');
+        } catch (error) {
+            Alert.alert('Password Change Failed', error.message);
+        }
+    };
+
     const handleLogout = async () => {
         const { error } = await supabase.auth.signOut();
         if (error) {
@@ -53,64 +85,121 @@ const EditProfileScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <Ionicons name="person-circle-outline" size={80} color="gray" style={styles.icon} />
-            <Text style={styles.title}>Edit Profile</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="First Name"
-                value={firstName}
-                onChangeText={(text) => setFirstName(text)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Last Name"
-                value={lastName}
-                onChangeText={(text) => setLastName(text)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={(text) => setEmail(text)}
-                keyboardType="email-address"
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Phone Number"
-                value={phone}
-                onChangeText={(text) => setPhone(text)}
-                keyboardType="phone-pad"
-                maxLength={10}
-            />
-            <TouchableOpacity style={styles.button} onPress={handleSave}>
-                <Text style={styles.buttonText}>Save</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-                <Text style={styles.buttonText}>Logout</Text>
-            </TouchableOpacity>
-        </View>
+        <ScrollView style={styles.container}>
+            <View style={styles.header}>
+                <Ionicons name="person-circle-outline" size={80} color="gray" />
+                <Text style={styles.title}>Edit Profile</Text>
+            </View>
+
+            <View style={styles.formContainer}>
+                <TextInput
+                    style={styles.input}
+                    placeholder="First Name"
+                    value={firstName}
+                    onChangeText={(text) => setFirstName(text)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Last Name"
+                    value={lastName}
+                    onChangeText={(text) => setLastName(text)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={(text) => setEmail(text)}
+                    keyboardType="email-address"
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Phone Number"
+                    value={phone}
+                    onChangeText={(text) => setPhone(text)}
+                    keyboardType="phone-pad"
+                    maxLength={10}
+                />
+            </View>
+
+            <View style={styles.passwordSection}>
+                <Text style={styles.passwordSectionTitle}>Change Password</Text>
+                <View style={styles.passwordInputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="New Password"
+                        value={newPassword}
+                        onChangeText={(text) => setNewPassword(text)}
+                        secureTextEntry={!showNewPassword}
+                    />
+                    <TouchableOpacity
+                        onPress={() => setShowNewPassword(!showNewPassword)}
+                        style={styles.eyeIcon}
+                    >
+                        <Ionicons
+                            name={showNewPassword ? 'eye' : 'eye-off'}
+                            size={24}
+                            color="gray"
+                        />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.passwordInputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Confirm New Password"
+                        value={confirmNewPassword}
+                        onChangeText={(text) => setConfirmNewPassword(text)}
+                        secureTextEntry={!showConfirmPassword}
+                    />
+                    <TouchableOpacity
+                        onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                        style={styles.eyeIcon}
+                    >
+                        <Ionicons
+                            name={showConfirmPassword ? 'eye' : 'eye-off'}
+                            size={24}
+                            color="gray"
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={handleSave}>
+                    <Text style={styles.buttonText}>Save</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.button} onPress={handlePasswordChange}>
+                    <Text style={styles.buttonText}>Change Password</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                    <Text style={styles.buttonText}>Logout</Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#f5f5f5',
-        padding: 20,
+        paddingHorizontal: 20,
     },
-    icon: {
-        position: 'absolute',
-        top: 40,
-        right: 20,
+    header: {
+        alignItems: 'center',
+        marginTop: 20,
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 20,
+        marginTop: 10,
         color: '#333',
+    },
+    formContainer: {
+        marginTop: 30,
+        width: '100%',
     },
     input: {
         width: '100%',
@@ -122,6 +211,30 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderColor: '#ddd',
         borderWidth: 1,
+    },
+    passwordSection: {
+        marginTop: 30,
+    },
+    passwordSectionTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: '#333',
+        textAlign: 'center', // Aligns the title to the left
+        paddingLeft: 1,    // Slight padding to match input fields
+    },
+    passwordInputContainer: {
+        position: 'relative',
+        marginBottom: 15,
+    },
+    eyeIcon: {
+        position: 'absolute',
+        right: 10,
+        top: 15,
+    },
+    buttonContainer: {
+        marginTop: 40,
+        width: '100%',
     },
     button: {
         width: '100%',
@@ -136,6 +249,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 18,
         fontWeight: 'bold',
+        alignItems: 'center',
     },
     logoutButton: {
         width: '100%',
@@ -147,4 +261,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default EditProfileScreen;
+export default EditProfileScreen
