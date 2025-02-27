@@ -21,18 +21,25 @@ Clone the repository:
 bash
 Copy code
 git clone https://github.com/username/NewsPalette.git
+
 cd NewsPalette
 
 Install dependencies:
 
 bash
+
 Copy code
+
 npm install
+
 Start the development server:
 
 bash
+
 Copy code
+
 expo start
+
 Run on your device:
 
 Use the Expo Go app (iOS/Android) to scan the QR code from the terminal or browser.
